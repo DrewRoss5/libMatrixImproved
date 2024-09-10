@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 #include "matrix.h"
 
@@ -10,6 +11,20 @@ Matrix::Matrix(unsigned int height, unsigned int width){
     this->width_ = width;
     this->height_ = height;
     this->size_ = width * height;
+}
+
+// constructs a Matrix from the provided vector, thorws a std::invalid_argument if the vector is the incorrect size
+Matrix::Matrix(unsigned int height, unsigned int width, const std::vector<double>& vec){
+    this->width_ = width;
+    this->height_ = height;
+    this->size_ = width * height;
+    // ensure the vector is the correct size
+    if (vec.size() != this->size_)
+        throw std::invalid_argument("The size of the vector does not match the size of the matrix");
+    // copy the data over
+    this->matrix_ = new double[this->size_]; 
+    for (int i = 0; i < this->size_; i++)
+        this->matrix_[i] = vec[i];
 }
 
 // main destructor, frees the memory and overwrites the pointer

@@ -2,10 +2,12 @@
 #define MATRIX_H
 
 #include <iostream>
+#include <vector>
 
 class Matrix{
     public:
         Matrix(unsigned int height, unsigned int width);
+        Matrix(unsigned int height, unsigned int width, const std::vector<double>& vec);
         ~Matrix();
         // simple getters
         unsigned int height() {return height_;}
