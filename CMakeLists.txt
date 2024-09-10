@@ -6,5 +6,10 @@ include_directories("inc")
 
 add_library(matrixlib STATIC src/matrix.cpp inc/matrix.h)
 
-# this is for ad-hoc testing before a test suite is written
-add_executable(main src/main.cpp src/matrix.cpp inc/matrix.h)
+find_package(GTest)
+include(GoogleTest)
+add_executable(tests
+               test/main_test.cpp
+               inc/matrix.h
+               src/matrix.cpp)  
+target_link_libraries(tests PRIVATE GTest::gtest)
