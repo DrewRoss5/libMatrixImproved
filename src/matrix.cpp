@@ -5,7 +5,7 @@
 
 // main constructor
 Matrix::Matrix(unsigned int height, unsigned int width){
-    this->matrix_ = new int[width * height]; // while matrices are two-dimensional, this is implemented as a one-dimensional array for performance purposes
+    this->matrix_ = new double[width * height]; // while matrices are two-dimensional, this is implemented as a one-dimensional array for performance purposes
     this->width_ = width;
     this->height_ = height;
     this->size_ = width * height;
@@ -40,7 +40,7 @@ int Matrix::get(unsigned int row, unsigned int column) const{
 }
 
 // returns a "row" in the matrix (this should be used with caution, as the resulting row may be used to access other rows) throws a std::out_of_range if the row number is out of bounds
-int* Matrix::operator[](unsigned int row){
+double* Matrix::operator[](unsigned int row){
     if (row >= this->height_)
         throw std::out_of_range("Row number out of bounds");
     return this->matrix_ + (row * this->width_);
@@ -87,7 +87,7 @@ void Matrix::subtract(const Matrix& mat){
 }
 
 // multiplies each number in a given row by each number in a provided column from this matrix
- int Matrix::multiply_col_(int* row, int column_no, int row_size) const{
+ int Matrix::multiply_col_(double* row, int column_no, int row_size) const{
     int sum = 0;
     for (int i = 0; i < row_size; i++)
         sum += row[i] * this->matrix_[(i * width_) + column_no];
@@ -107,7 +107,7 @@ Matrix Matrix::multiply(const Matrix& mat) const{
         throw std::invalid_argument("Invalid matrix sizes for multiplication");
     Matrix result(this->height_, mat.width_);
     // calculate and insert the values in the matrix
-    int* row;
+    double* row;
     for (int i = 0; i < this->height_; i++){
         for (int j = 0; j < mat.width_; j++){
             row = this->matrix_ + (this->width_ * i);
@@ -124,7 +124,6 @@ void Matrix::operator-=(int n){this->subtract(n);}
 void Matrix::operator-=(const Matrix& mat){this->subtract(mat);}
 void Matrix::operator*=(int n){this->multiply(n);}
 Matrix Matrix::operator*(const Matrix& mat) const{return this->multiply(mat);} 
-
 // TODO: Condense these using a template
 // these are used to create a new matrix and apply an opperation to them
 Matrix Matrix::create_from_operation_(void (Matrix::*operation)(int), int n) const{
@@ -143,4 +142,3 @@ Matrix Matrix::operator+(const Matrix& mat) const {return this->create_from_oper
 Matrix Matrix::operator-(int n) const {return this->create_from_operation_(&Matrix::subtract, n);}
 Matrix Matrix::operator-(const Matrix& mat) const {return this->create_from_operation_(&Matrix::subtract, mat);}
 Matrix Matrix::operator*(int n) const {return this->create_from_operation_(&Matrix::multiply, n);}
-

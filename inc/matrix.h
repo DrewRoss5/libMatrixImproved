@@ -14,7 +14,7 @@ class Matrix{
         // basic IO functions
         void set(unsigned int row, unsigned int column, int value);
         int get(unsigned int row, unsigned int column) const;
-        int* operator[] (unsigned int row);
+        double* operator[] (unsigned int row);
         friend std::ostream& operator<<(std::ostream& out, const Matrix& mat);
         // arithmetic functions and operators
         void add(int n);
@@ -35,12 +35,12 @@ class Matrix{
         Matrix operator*(const Matrix& mat) const;
         Matrix operator*(int n) const;
     private:   
-        int* matrix_{nullptr};
+        double* matrix_{nullptr};
         unsigned int height_{0};
         unsigned int width_{0};
         unsigned int size_{0};
         Matrix deep_copy_() const;
-        int multiply_col_(int* row, int column_no, int row_size) const;
+        int multiply_col_(double* row, int column_no, int row_size) const;
         Matrix create_from_operation_(void ( Matrix::*operation)(int), int n) const;
         Matrix create_from_operation_(void (Matrix::*operation)(const Matrix&), const Matrix& mat) const;
 };
