@@ -18,7 +18,7 @@ Matrix::~Matrix(){
 }
 
 // returns a deep copy of the matix 
-const Matrix Matrix::deep_copy_(){
+Matrix Matrix::deep_copy_() const{
     Matrix new_mat(this->height_, this->width_);
     for (int i = 0; i < this->size_; i++)
         new_mat.matrix_[i] = this->matrix_[i];
@@ -33,7 +33,7 @@ void Matrix::set(unsigned int row, unsigned int column, int value){
 }
 
 // returns the value of a single element in the matrix, throws a std::out_of_bounds if the indexes are out of bounds
-const int Matrix::get(unsigned int row, unsigned int column){
+int Matrix::get(unsigned int row, unsigned int column) const{
     if (row >= height_ || row >= width_)
         throw std::out_of_range("The row or column are out of range");   
     return this->matrix_[(row * width_) + column];
@@ -47,7 +47,7 @@ int* Matrix::operator[](unsigned int row){
 }
 
 // writes the contents of the matrix to an ostream
-std::ostream& operator<<(std::ostream& out, Matrix& mat){
+std::ostream& operator<<(std::ostream& out, const Matrix& mat){
     for (int i = 0; i < mat.size_; i++){
         out << mat.matrix_[i];
         if ((i + 1) % mat.width_ == 0 && i != 0)
@@ -87,7 +87,7 @@ void Matrix::subtract(const Matrix& mat){
 }
 
 // multiplies each number in a given row by each number in a provided column from this matrix
-const int Matrix::multiply_col_(int* row, int column_no, int row_size){
+ int Matrix::multiply_col_(int* row, int column_no, int row_size) const{
     int sum = 0;
     for (int i = 0; i < row_size; i++)
         sum += row[i] * this->matrix_[(i * width_) + column_no];
@@ -101,7 +101,7 @@ void Matrix::multiply(int n){
 }
 
 // multiplies two matrices, throws a std::invalid_argument if they are the incorrect size 
-Matrix Matrix::multiply(Matrix& mat){
+Matrix Matrix::multiply(const Matrix& mat) const{
     // validate the two matrices are the correct size
     if (this->width_ != mat.height_)
         throw std::invalid_argument("Invalid matrix sizes for multiplication");
@@ -116,3 +116,31 @@ Matrix Matrix::multiply(Matrix& mat){
     }
     return result;
 }
+
+// arithmatic operators
+void Matrix::operator+=(int n){this->add(n);}
+void Matrix::operator+=(const Matrix& mat){this->add(mat);}
+void Matrix::operator-=(int n){this->subtract(n);}
+void Matrix::operator-=(const Matrix& mat){this->subtract(mat);}
+void Matrix::operator*=(int n){this->multiply(n);}
+Matrix Matrix::operator*(const Matrix& mat) const{return this->multiply(mat);} 
+
+// TODO: Condense these using a template
+// these are used to create a new matrix and apply an opperation to them
+Matrix Matrix::create_from_operation_(void (Matrix::*operation)(int), int n) const{
+    Matrix copy = this->deep_copy_();
+    (copy.*operation)(n);
+    return copy;
+}
+Matrix Matrix::create_from_operation_(void (Matrix::*operation)(const Matrix& mat), const Matrix& mat) const{
+    Matrix copy = this->deep_copy_();
+    (copy.*operation)(mat);
+    return copy;
+}
+// used for these operators
+Matrix Matrix::operator+(int n) const {return this->create_from_operation_(&Matrix::add, n);}
+Matrix Matrix::operator+(const Matrix& mat) const {return this->create_from_operation_(&Matrix::add, mat);}
+Matrix Matrix::operator-(int n) const {return this->create_from_operation_(&Matrix::subtract, n);}
+Matrix Matrix::operator-(const Matrix& mat) const {return this->create_from_operation_(&Matrix::subtract, mat);}
+Matrix Matrix::operator*(int n) const {return this->create_from_operation_(&Matrix::multiply, n);}
+
