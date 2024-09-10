@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <iostream>
+#include <cstring>
 
 #include "matrix.h"
 
@@ -142,3 +143,14 @@ Matrix Matrix::operator+(const Matrix& mat) const {return this->create_from_oper
 Matrix Matrix::operator-(int n) const {return this->create_from_operation_(&Matrix::subtract, n);}
 Matrix Matrix::operator-(const Matrix& mat) const {return this->create_from_operation_(&Matrix::subtract, mat);}
 Matrix Matrix::operator*(int n) const {return this->create_from_operation_(&Matrix::multiply, n);}
+
+// comparision operators
+bool Matrix::operator==(const Matrix& mat) const {
+    if (this->height_ != mat.height_ || this->width_ != mat.width_)
+        return false;
+    return !memcmp(this->matrix_, mat.matrix_, (this->size_ * sizeof(double)));
+}
+
+bool Matrix::operator!=(const Matrix& mat) const{
+    return !(*this == mat);
+}

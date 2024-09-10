@@ -34,6 +34,10 @@ class Matrix{
         void operator*=(int n);
         Matrix operator*(const Matrix& mat) const;
         Matrix operator*(int n) const;
+        // coparison operators
+        bool operator==(const Matrix& mat) const;
+        bool operator!=(const Matrix& mat) const;
+
     private:   
         double* matrix_{nullptr};
         unsigned int height_{0};

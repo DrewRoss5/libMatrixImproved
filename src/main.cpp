@@ -17,13 +17,11 @@ int main(){
     m2[0][1] = 4;
     m2[1][0] = 6;
     m2[1][1] = 8;
-    // test arithmetic operators
-    cout << m1 + m2 << endl;
-    cout << m2 - m1 << endl;
-    cout << m1 * m2 << endl;
-    cout << m1 + 1 << endl;
-    cout << m2 - 2 << endl;
-    cout << m1 * 3 << endl;
+    // test equality operators
+    if (m1 != m2)
+        cout << "Test 1 passed" << endl;
+    if (m1 == m1)
+        cout << "Test 2 passed" << endl;
 
     
 
