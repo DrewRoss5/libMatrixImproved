@@ -28,7 +28,6 @@ Matrix::Matrix(unsigned int height, unsigned int width, const std::vector<double
 }
 
 // constructs an identity Matrix of a given size
-// TODO: Find if there's a more efficient way to do this
 Matrix Matrix::identity_matrix(int size){
     Matrix identity_mat = Matrix(size, size);
     int row = 0;
@@ -119,7 +118,7 @@ void Matrix::subtract(int n){
 // subtracts two matrices, throws a std::invalid_argument if the second matrix is a different size
 void Matrix::subtract(const Matrix& mat){
     if (mat.height_ != this->height_ || mat.width_ != this->width_)
-        throw std::invalid_argument("Matrices must be the same size to be added");
+        throw std::invalid_argument("Matrices must be the same size to be subtracted");
     for (int i = 0; i < this->size_; i++)
         this->matrix_[i] -= mat.matrix_[i];  
 }
