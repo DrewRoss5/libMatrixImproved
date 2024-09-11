@@ -27,6 +27,28 @@ Matrix::Matrix(unsigned int height, unsigned int width, const std::vector<double
         this->matrix_[i] = vec[i];
 }
 
+// constructs an identity Matrix of a given size
+// TODO: Find if there's a more efficient way to do this
+Matrix Matrix::identity_matrix(int size){
+    Matrix identity_mat = Matrix(size, size);
+    int row = 0;
+    int col = 0;
+    for (int i = 0; i < (size * size); i++){
+        // check if we're at the start of a new row
+        if (col == size){
+            col = 0;
+            row++;
+        }
+        // update the new matrix
+        if (row == col)
+            identity_mat.matrix_[i] = 1;
+        else
+            identity_mat.matrix_[i] = 0;
+        col++;
+    }
+    return identity_mat;    
+} 
+
 // main destructor, frees the memory and overwrites the pointer
 Matrix::~Matrix(){
     delete[] this->matrix_;

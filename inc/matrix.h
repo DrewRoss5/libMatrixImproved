@@ -8,6 +8,7 @@ class Matrix{
     public:
         Matrix(unsigned int height, unsigned int width);
         Matrix(unsigned int height, unsigned int width, const std::vector<double>& vec);
+        static Matrix identity_matrix(int size);
         ~Matrix();
         // simple getters
         unsigned int height() {return height_;}

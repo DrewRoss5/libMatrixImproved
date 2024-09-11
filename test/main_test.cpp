@@ -17,6 +17,14 @@ TEST(MatrixTests, ArithmeticOpeations){
     EXPECT_EQ(m3, Matrix(2, 2, {14, 20, 30, 44}));
 }
 
+// test that identity matrices work properly (that is, a matrix multilplied by an identity matrix results in itseld)
+TEST(MatrixTests, IdentityMatrices){
+    Matrix m1 = Matrix(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix identity = Matrix::identity_matrix(3);
+    Matrix m2 = m1 * identity;
+    EXPECT_TRUE(m1 == m2);
+}
+
 
 int main(int argc, char** argv){
     testing::InitGoogleTest(&argc, argv);
