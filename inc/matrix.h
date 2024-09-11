@@ -16,7 +16,8 @@ class Matrix{
         unsigned int size() {return size_;}
         // basic IO functions
         void set(unsigned int row, unsigned int column, int value);
-        int get(unsigned int row, unsigned int column) const;
+        double get(unsigned int row, unsigned int column) const;
+        double& operator()(unsigned int row, unsigned int column); 
         double* operator[] (unsigned int row);
         friend std::ostream& operator<<(std::ostream& out, const Matrix& mat);
         // arithmetic functions and operators

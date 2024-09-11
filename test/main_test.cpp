@@ -25,6 +25,15 @@ TEST(MatrixTests, IdentityMatrices){
     EXPECT_TRUE(m1 == m2);
 }
 
+// test the getter operators
+TEST(MatrixTests, GetterOperators){
+    Matrix mat = Matrix::identity_matrix(3);
+    mat(1, 1) = 5;   
+    EXPECT_EQ(mat[1][1], 5);
+    mat[0][1] = 10;
+    EXPECT_EQ(mat(0, 1), 10);
+}
+
 
 int main(int argc, char** argv){
     testing::InitGoogleTest(&argc, argv);

@@ -70,10 +70,16 @@ void Matrix::set(unsigned int row, unsigned int column, int value){
 }
 
 // returns the value of a single element in the matrix, throws a std::out_of_bounds if the indexes are out of bounds
-int Matrix::get(unsigned int row, unsigned int column) const{
+double Matrix::get(unsigned int row, unsigned int column) const{
     if (row >= height_ || row >= width_)
         throw std::out_of_range("The row or column are out of range");   
     return this->matrix_[(row * width_) + column];
+}
+
+double& Matrix::operator()(unsigned int row, unsigned int column){
+    if (row >= height_ || row >= width_)
+        throw std::out_of_range("The row or column are out of range");
+    return this->matrix_[(width_ * row) + column];
 }
 
 // returns a "row" in the matrix (this should be used with caution, as the resulting row may be used to access other rows) throws a std::out_of_range if the row number is out of bounds
