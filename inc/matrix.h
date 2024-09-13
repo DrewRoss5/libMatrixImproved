@@ -26,7 +26,7 @@ class Matrix{
         void add(const Matrix& mat);
         void operator+=(int n);
         void operator+=(const Matrix& mat);
-        void operator=(const Matrix& mat);
+        Matrix& operator=(const Matrix& mat);
         Matrix operator+(int n) const;
         Matrix operator+(const Matrix& mat) const;
         void subtract(int n);

@@ -29,13 +29,19 @@ Matrix::Matrix(unsigned int height, unsigned int width, const std::vector<double
 
 // copy consturctor for the Matrix class
 Matrix::Matrix(const Matrix& mat){
-    *this = mat.deep_copy_();
+    *this = mat;
 }
 
 // operator for the copy constructor, also cleans up the assigned matrix
-void Matrix::operator=(const Matrix& mat){
-    delete[] this->matrix_;
-    *this = Matrix(mat);
+Matrix& Matrix::operator=(const Matrix& mat){
+    this->height_ = mat.height_;
+    this->width_ = mat.width_;
+    this->size_ = mat.size_;
+    // copy the contents of the matrix
+    this->matrix_ = new double[size_];
+    for (int i = 0; i < this->size_; i++)
+        this->matrix_[i] = mat.matrix_[i];
+    return *this;
 }
 
 // constructs an identity Matrix of a given size

@@ -34,6 +34,14 @@ TEST(MatrixTests, GetterOperators){
     EXPECT_EQ(mat(0, 1), 10);
 }
 
+// test the copy constructor
+TEST(MatrixTests, CopyConstructors){
+    Matrix m1(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix m2(m1);
+    Matrix m3 = m2;
+    EXPECT_EQ(m1, m2);
+    EXPECT_EQ(m2, m3);
+}
 
 int main(int argc, char** argv){
     testing::InitGoogleTest(&argc, argv);
