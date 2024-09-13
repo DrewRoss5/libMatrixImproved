@@ -8,6 +8,7 @@ class Matrix{
     public:
         Matrix(unsigned int height, unsigned int width);
         Matrix(unsigned int height, unsigned int width, const std::vector<double>& vec);
+        Matrix(const Matrix& mat);
         static Matrix identity_matrix(int size);
         ~Matrix();
         // simple getters
@@ -25,6 +26,7 @@ class Matrix{
         void add(const Matrix& mat);
         void operator+=(int n);
         void operator+=(const Matrix& mat);
+        void operator=(const Matrix& mat);
         Matrix operator+(int n) const;
         Matrix operator+(const Matrix& mat) const;
         void subtract(int n);

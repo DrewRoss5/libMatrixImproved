@@ -27,6 +27,17 @@ Matrix::Matrix(unsigned int height, unsigned int width, const std::vector<double
         this->matrix_[i] = vec[i];
 }
 
+// copy consturctor for the Matrix class
+Matrix::Matrix(const Matrix& mat){
+    *this = mat.deep_copy_();
+}
+
+// operator for the copy constructor, also cleans up the assigned matrix
+void Matrix::operator=(const Matrix& mat){
+    delete[] this->matrix_;
+    *this = Matrix(mat);
+}
+
 // constructs an identity Matrix of a given size
 Matrix Matrix::identity_matrix(int size){
     Matrix identity_mat = Matrix(size, size);
@@ -47,6 +58,7 @@ Matrix Matrix::identity_matrix(int size){
     }
     return identity_mat;    
 } 
+
 
 // main destructor, frees the memory and overwrites the pointer
 Matrix::~Matrix(){
