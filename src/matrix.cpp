@@ -41,24 +41,11 @@ void Matrix::operator=(const Matrix& mat){
 // constructs an identity Matrix of a given size
 Matrix Matrix::identity_matrix(int size){
     Matrix identity_mat = Matrix(size, size);
-    int row = 0;
-    int col = 0;
-    for (int i = 0; i < (size * size); i++){
-        // check if we're at the start of a new row
-        if (col == size){
-            col = 0;
-            row++;
-        }
-        // update the new matrix
-        if (row == col)
-            identity_mat.matrix_[i] = 1;
-        else
-            identity_mat.matrix_[i] = 0;
-        col++;
-    }
+    std::memset(identity_mat.matrix_, 0, (sizeof(double) * (size * size)));
+    for (int i = 0; i < size; i++)
+        identity_mat.matrix_[(size * i) + i] = 1;
     return identity_mat;    
 } 
-
 
 // main destructor, frees the memory and overwrites the pointer
 Matrix::~Matrix(){
