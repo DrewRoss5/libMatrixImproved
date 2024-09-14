@@ -1,7 +1,6 @@
 # libMatrixImproved
 An improved version of my matrix library
-# Roadmap:
-- Finish documentation 
+# Roadmap: 
 - Implement determinant calculation
 - Create performance benchmarks for the Matrix Class
 
@@ -63,7 +62,7 @@ An improved version of my matrix library
     - The element at (row, col)
   - Notes:
     - Like arrays, matrices are zero-indexed, for example to get the element in the first column of the first row: `my_matrix.get(0, 0);`
-    - Throws a `std::out_of_range` error if the row is greater than the matrix's height, or if the column is greater than the matrix's width.
+    - Throws a `std::out_of_range` error if the row is greater than the matrix's height, or if the column is greater than the matrix's width
 ## Matrix Arithmetic:
 ### void Matrix::add(const Matrix& mat):
 - Parameters: 
@@ -79,4 +78,44 @@ An improved version of my matrix library
   - `const Matrix& mat`: The matrix to multiply this one by
 - Returns:
   - The result of Matrix multliplication between this Matrix and `mat`.
-- Description: Performs Matrix multiplication by multiplying this Matrix by `mat` and returns the result of the multiplicatio as a new `Matrix` object.
+- Description: Performs Matrix multiplication by multiplying this Matrix by `mat` and returns the result of the multiplication as a new `Matrix` object.
+## Double Arithmetic:
+### void Matrix::add(double n):
+- Parameters:
+  - `double n`: The number to add to each element in the Matrix.
+- Returns:
+  - `void`
+- Description:
+  - adds `n` to each element in the Matrix.
+### void Matrix::sub(dobule n):
+  - See above, but for subtraction
+### void Matrix::multiply(double n).
+  - See above, but for multiplication.
+## Operators:
+### Addition:
+#### void operator+=(double n) / void operator+=(const Matrix& mat):
+  - Adds `n` or `mat` to the Matrix.
+  - Notes:
+    - Throws a `std::invalid argument` if `mat` is a different size than this object
+#### Matrix operator+(double n) / Matrix operator+(const Matrix& mat):
+  - Creates a copy of this object, adds `n` or `mat` to it, and returns it
+  - Notes:
+    - Throws a `std::invalid argument` if `mat` is a different size than this object
+### Subtraction:
+#### void operator-=(double n) / void operator-=(const Matrix& mat):
+  - Subtract `n` or `mat` from the Matrix:
+  - Notes:
+    - Throws a `std::invalid argument` if `mat` is a different size than this object
+#### Matrix operator-(double n) / Matrix operator-(const Matrix& mat):
+  - Creates a copy of this object, subtracts `n` or `mat` from it, and returns it
+  - Notes:
+    - Throws a `std::invalid argument` if `mat` is a different size than this object
+### Multiplication:
+#### void operator*=(double n):
+  - multiplies each element in the Matrix by `n`
+#### Matrix operator*(double n):
+  - Creates a copy of this object, multiplies each element in the copy by `n` and returns it.
+#### Matrix operator*(const Matrix& mat)
+  - Returns the product of Matrix multlipication between this object and `mat`
+  - Notes:
+    - Throws a `std::invalid_argument` if the Matrix sizes are incorrect for Matrix multiplication
