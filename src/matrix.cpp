@@ -174,23 +174,12 @@ void Matrix::operator-=(int n){this->subtract(n);}
 void Matrix::operator-=(const Matrix& mat){this->subtract(mat);}
 void Matrix::operator*=(int n){this->multiply(n);}
 Matrix Matrix::operator*(const Matrix& mat) const{return this->multiply(mat);} 
-// TODO: Condense these using a template
-// these are used to create a new matrix and apply an opperation to them
-Matrix Matrix::create_from_operation_(void (Matrix::*operation)(int), int n) const{
-    Matrix copy = this->deep_copy_();
-    (copy.*operation)(n);
-    return copy;
-}
-Matrix Matrix::create_from_operation_(void (Matrix::*operation)(const Matrix& mat), const Matrix& mat) const{
-    Matrix copy = this->deep_copy_();
-    (copy.*operation)(mat);
-    return copy;
-}
+
 // used for these operators
 Matrix Matrix::operator+(int n) const {return this->create_from_operation_(&Matrix::add, n);}
-Matrix Matrix::operator+(const Matrix& mat) const {return this->create_from_operation_(&Matrix::add, mat);}
+Matrix Matrix::operator+(const Matrix& mat) const {return this->create_from_operation_<const Matrix&>(&Matrix::add, mat);}
 Matrix Matrix::operator-(int n) const {return this->create_from_operation_(&Matrix::subtract, n);}
-Matrix Matrix::operator-(const Matrix& mat) const {return this->create_from_operation_(&Matrix::subtract, mat);}
+Matrix Matrix::operator-(const Matrix& mat) const {return this->create_from_operation_<const Matrix&>(&Matrix::subtract, mat);}
 Matrix Matrix::operator*(int n) const {return this->create_from_operation_(&Matrix::multiply, n);}
 
 // comparision operators

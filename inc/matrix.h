@@ -51,8 +51,13 @@ class Matrix{
         unsigned int size_{0};
         Matrix deep_copy_() const;
         int multiply_col_(double* row, int column_no, int row_size) const;
-        Matrix create_from_operation_(void ( Matrix::*operation)(int), int n) const;
-        Matrix create_from_operation_(void (Matrix::*operation)(const Matrix&), const Matrix& mat) const;
+        // this is implemented in the header file because it uses a template
+        template <typename T>
+        Matrix create_from_operation_(void ( Matrix::*operation)(T), T val) const{
+            Matrix copy = this->deep_copy_();
+            (copy.*operation)(val);
+            return copy;
+        }
 };
 
 #endif
