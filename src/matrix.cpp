@@ -2,11 +2,12 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <time.h>
 
 #include "matrix.h"
 
 // main constructor
-Matrix::Matrix(unsigned int height, unsigned int width){
+Matrix::Matrix(unsigned height, unsigned width){
     this->matrix_ = new double[width * height]; // while matrices are two-dimensional, this is implemented as a one-dimensional array for performance purposes
     this->width_ = width;
     this->height_ = height;
@@ -17,7 +18,7 @@ Matrix::Matrix(unsigned int height, unsigned int width){
 }
 
 // constructs a Matrix from the provided vector, thorws a std::invalid_argument if the vector is the incorrect size
-Matrix::Matrix(unsigned int height, unsigned int width, const std::vector<double>& vec){
+Matrix::Matrix(unsigned height, unsigned width, const std::vector<double>& vec){
     this->width_ = width;
     this->height_ = height;
     this->size_ = width * height;
@@ -55,6 +56,15 @@ Matrix Matrix::identity_matrix(int size){
     return identity_mat;    
 } 
 
+// constructs a randomized matrix
+Matrix Matrix::random_matrix(unsigned width, unsigned height, int min, int max){
+    std::srand(time(0));
+    Matrix random = Matrix(width, height);
+    for (int i = 0; i < random.size_; i++)
+        random.matrix_[i] = (min + std::rand()) % max;
+    return random;
+}
+
 // main destructor, frees the memory and overwrites the pointer
 Matrix::~Matrix(){
     delete[] this->matrix_;
@@ -70,27 +80,27 @@ Matrix Matrix::deep_copy_() const{
 }
 
 // sets the value of a single element in the matrix, throws a std::out_of_bounds if the indexes are out of bounds
-void Matrix::set(unsigned int row, unsigned int column, int value){
+void Matrix::set(unsigned row, unsigned column, int value){
     if (row >= height_ || row >= width_)
         throw std::out_of_range("The row or column are out of range");
     this->matrix_[(row * width_) + column] = value;
 }
 
 // returns the value of a single element in the matrix, throws a std::out_of_bounds if the indexes are out of bounds
-double Matrix::get(unsigned int row, unsigned int column) const{
+double Matrix::get(unsigned row, unsigned column) const{
     if (row >= height_ || row >= width_)
         throw std::out_of_range("The row or column are out of range");   
     return this->matrix_[(row * width_) + column];
 }
 
-double& Matrix::operator()(unsigned int row, unsigned int column){
+double& Matrix::operator()(unsigned row, unsigned column){
     if (row >= height_ || row >= width_)
         throw std::out_of_range("The row or column are out of range");
     return this->matrix_[(width_ * row) + column];
 }
 
 // returns a "row" in the matrix (this should be used with caution, as the resulting row may be used to access other rows) throws a std::out_of_range if the row number is out of bounds
-double* Matrix::operator[](unsigned int row){
+double* Matrix::operator[](unsigned row){
     if (row >= this->height_)
         throw std::out_of_range("Row number out of bounds");
     return this->matrix_ + (row * this->width_);

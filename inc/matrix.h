@@ -3,23 +3,25 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
 
 class Matrix{
     public:
-        Matrix(unsigned int height, unsigned int width);
-        Matrix(unsigned int height, unsigned int width, const std::vector<double>& vec);
+        Matrix(unsigned height, unsigned width);
+        Matrix(unsigned height, unsigned width, const std::vector<double>& vec);
         Matrix(const Matrix& mat);
         static Matrix identity_matrix(int size);
+        static Matrix random_matrix(unsigned width, unsigned height, int min = 0, int max = 100);
         ~Matrix();
         // simple getters
-        unsigned int height() {return height_;}
-        unsigned int width() {return width_;}
-        unsigned int size() {return size_;}
+        unsigned height() {return height_;}
+        unsigned width() {return width_;}
+        unsigned size() {return size_;}
         // basic IO functions
-        void set(unsigned int row, unsigned int column, int value);
-        double get(unsigned int row, unsigned int column) const;
-        double& operator()(unsigned int row, unsigned int column); 
-        double* operator[] (unsigned int row);
+        void set(unsigned row, unsigned column, int value);
+        double get(unsigned row, unsigned column) const;
+        double& operator()(unsigned row, unsigned column); 
+        double* operator[] (unsigned row);
         friend std::ostream& operator<<(std::ostream& out, const Matrix& mat);
         // arithmetic functions and operators
         void add(int n);
@@ -46,9 +48,9 @@ class Matrix{
 
     private:   
         double* matrix_{nullptr};
-        unsigned int height_{0};
-        unsigned int width_{0};
-        unsigned int size_{0};
+        unsigned height_{0};
+        unsigned width_{0};
+        unsigned size_{0};
         Matrix deep_copy_() const;
         int multiply_col_(double* row, int column_no, int row_size) const;
         // this is implemented in the header file because it uses a template
