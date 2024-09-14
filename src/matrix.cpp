@@ -11,6 +11,9 @@ Matrix::Matrix(unsigned int height, unsigned int width){
     this->width_ = width;
     this->height_ = height;
     this->size_ = width * height;
+    // fill the matrix with zeroes to avoid undefined behavior
+    std::memset(this->matrix_, 0, (sizeof(double) * (this->width_ * this->height_)));
+
 }
 
 // constructs a Matrix from the provided vector, thorws a std::invalid_argument if the vector is the incorrect size
@@ -47,7 +50,6 @@ Matrix& Matrix::operator=(const Matrix& mat){
 // constructs an identity Matrix of a given size
 Matrix Matrix::identity_matrix(int size){
     Matrix identity_mat = Matrix(size, size);
-    std::memset(identity_mat.matrix_, 0, (sizeof(double) * (size * size)));
     for (int i = 0; i < size; i++)
         identity_mat.matrix_[(size * i) + i] = 1;
     return identity_mat;    
