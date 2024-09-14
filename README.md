@@ -1,5 +1,5 @@
 # libMatrixImproved
-An improved version of my matrix library
+A Matrix Library in C++ written to prioritize performance. 
 # Roadmap: 
 - Implement determinant calculation
 - Create performance benchmarks for the Matrix Class
