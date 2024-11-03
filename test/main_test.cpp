@@ -17,6 +17,13 @@ TEST(MatrixTests, ArithmeticOpeations){
     EXPECT_EQ(m3, Matrix(2, 2, {14, 20, 30, 44}));
 }
 
+TEST(MatrixTests, MultiplicationTests){
+    Matrix m1(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix m2(3, 2, {2, 4, 6, 8, 10, 12});
+    Matrix expected(2, 2, {44, 56, 98, 128});
+    EXPECT_EQ((m1 * m2), expected);
+}
+
 // test that identity matrices work properly (that is, a matrix multilplied by an identity matrix results in itseld)
 TEST(MatrixTests, IdentityMatrices){
     Matrix m1 = Matrix(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
