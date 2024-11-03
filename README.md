@@ -1,8 +1,7 @@
 # libMatrixImproved
 A Matrix Library in C++ written to prioritize performance. 
 # Roadmap: 
-- Implement determinant calculation
-- Create performance benchmarks for the Matrix Class
+- Create performance benchmarks for the Matrix Class (include single-threaded and multi-threaded implementations of mutliplication)
 
 # API: 
 ## Constructors:
