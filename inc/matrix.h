@@ -42,6 +42,7 @@ class Matrix{
         Matrix operator-(const Matrix& mat) const;
         void multiply(int n);
         Matrix multiply(Matrix& mat);
+        Matrix multiply_singlethread(Matrix& mat);
         void operator*=(int n);
         Matrix operator*(Matrix& mat);
         Matrix operator*(int n) const;
@@ -56,6 +57,7 @@ class Matrix{
         unsigned size_{0};
         Matrix deep_copy_() const;
         void multiply_col_();
+        double multiply_col_singlethread_(Matrix* mat, int row_num);
         // these are used for multithreaded multiplication 
         std::mutex multi_mut;
         int next_col {0};

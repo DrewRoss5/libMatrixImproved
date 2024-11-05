@@ -157,6 +157,14 @@ void Matrix::multiply(int n){
         this->matrix_[i] *= n;
 }
 
+// multiplies a column in this matrix by given row matrix
+double Matrix::multiply_col_singlethread_(Matrix* mat, int row_num){
+    double sum = 0;
+    for (int i = 0; i < this->height_; i++)
+        sum += this->matrix_[(this->height_ * i) + row_num] * (*mat)[row_num][i];
+    return sum;
+}
+
 // calculates the next element in the result matrix
 void Matrix::multiply_col_() {
     this->multi_mut.lock();
@@ -175,7 +183,7 @@ void Matrix::multiply_col_() {
     this->multi_mut.unlock();
     // multiply the ith row of this matrix by the jth column of the right hand side
     int row_offset = local_row * this->width_;
-    int sum = 0;
+    double sum = 0;
     for (int i = 0; i < this->width_; i++)
         sum += (this->matrix_[row_offset + i] * rhs->matrix_[(rhs->width_ * i) + local_col]);
     // update the result matrix (this doesn't need lock the mutex as only one thread should ever access a particular element)
@@ -205,6 +213,23 @@ Matrix Matrix::multiply(Matrix& mat){
     this->result_matrix = nullptr;
     return std::move(result);
 }
+
+Matrix Matrix::multiply_singlethread(Matrix &mat){
+    // validate the two matrices are the correct size
+    if (this->width_ != mat.height_)
+        throw std::invalid_argument("Invalid matrix sizes for multiplication");
+    Matrix result(this->height_, mat.width_);
+    // calculate and insert the values in the matrix
+    double* row;
+    for (int i = 0; i < this->height_; i++){
+        for (int j = 0; j < mat.width_; j++){
+            row = this->matrix_ + (this->width_ * i);
+            result.matrix_[(mat.width_ * i) + j] = mat.multiply_col_singlethread_(this, i);
+        }
+    }
+    return result;
+}
+
 
 // arithmatic operators
 void Matrix::operator+=(int n){this->add(n);}
