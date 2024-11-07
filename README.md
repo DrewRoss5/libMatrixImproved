@@ -1,7 +1,5 @@
 # libMatrixImproved
 A Matrix Library in C++ written to prioritize performance. 
-# Roadmap: 
-- Create performance benchmarks for the Matrix Class (include single-threaded and multi-threaded implementations of mutliplication)
 
 # API: 
 ## Constructors:
@@ -72,12 +70,18 @@ A Matrix Library in C++ written to prioritize performance.
 - Notes: throws a `std::invalid_argument` if the width or height of either matrix is different.
 ### void Matrix::subtract(const Matrix& mat):
   - See above, but for subtraction
-### Matrix Matrix::multiply(const Matrix& mat):
+### Matrix Matrix::multiply(Matrix& mat):
 - Parameters:
-  - `const Matrix& mat`: The matrix to multiply this one by
+  - `const Matrix& mat`: The matrix to multiply this one by. 
 - Returns:
   - The result of Matrix multliplication between this Matrix and `mat`.
-- Description: Performs Matrix multiplication by multiplying this Matrix by `mat` and returns the result of the multiplication as a new `Matrix` object.
+- Description: Performs Matrix multiplication by multiplying this Matrix by `mat` and returns the result of the multiplication as a new `Matrix` object. This will use all cores available on the CPU.
+### Matrix Matrix::multiply_singlethread(Matrix& mat):
+- Parameters:
+  - `const Matrix& mat`: The matrix to multiply this one by. 
+- Returns:
+  - The result of Matrix multliplication between this Matrix and `mat`.
+- Description: Performs Matrix multiplication by multiplying this Matrix by `mat` and returns the result of the multiplication as a new `Matrix` object. This will use only one thread.
 ## Double Arithmetic:
 ### void Matrix::add(double n):
 - Parameters:
@@ -114,7 +118,8 @@ A Matrix Library in C++ written to prioritize performance.
   - multiplies each element in the Matrix by `n`
 #### Matrix operator*(double n):
   - Creates a copy of this object, multiplies each element in the copy by `n` and returns it.
-#### Matrix operator*(const Matrix& mat)
+#### Matrix operator*(Matrix& mat)
   - Returns the product of Matrix multlipication between this object and `mat`
   - Notes:
     - Throws a `std::invalid_argument` if the Matrix sizes are incorrect for Matrix multiplication
+    - Uses the multithreaded implementation of multiplication.
