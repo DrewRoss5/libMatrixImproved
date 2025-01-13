@@ -48,8 +48,7 @@ Matrix& Matrix::operator=(const Matrix& mat){
     this->thread_count =  mat.thread_count;
     // copy the contents of the matrix
     this->matrix_ = new double[size_];
-    for (int i = 0; i < this->size_; i++)
-        this->matrix_[i] = mat.matrix_[i];
+    std::memcpy(this->matrix_, mat.matrix_, sizeof(double) * this->size_);
     return *this;
 }
 
