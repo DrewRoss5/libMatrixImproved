@@ -42,6 +42,7 @@ Matrix::Matrix(const Matrix& mat){
 
 // operator for the copy constructor, also cleans up the assigned matrix
 Matrix& Matrix::operator=(const Matrix& mat){
+    this->~Matrix();
     this->height_ = mat.height_;
     this->width_ = mat.width_;
     this->size_ = mat.size_;

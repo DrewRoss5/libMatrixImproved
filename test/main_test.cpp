@@ -70,8 +70,12 @@ TEST(MatrixTests, CopyConstructors){
     Matrix m1(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
     Matrix m2(m1);
     Matrix m3 = m2;
+    Matrix m4(3, 3, {2, 4, 6, 8, 10, 12, 14, 16, 18});
+    m4 = m2;
     EXPECT_EQ(m1, m2);
     EXPECT_EQ(m2, m3);
+    EXPECT_EQ(m4, m2);
+
 }
 
 int main(int argc, char** argv){
