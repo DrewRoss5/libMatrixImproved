@@ -70,7 +70,7 @@ class Matrix{
         Matrix create_from_operation_(void ( Matrix::*operation)(T), T val) const{
             Matrix copy = this->deep_copy_();
             (copy.*operation)(val);
-            return copy;
+            return std::move(copy);
         }
 };
 

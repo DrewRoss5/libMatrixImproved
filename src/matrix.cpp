@@ -227,7 +227,7 @@ Matrix Matrix::multiply_singlethread(Matrix &mat){
             result.matrix_[(mat.width_ * i) + j] = mat.multiply_col_singlethread_(this, i);
         }
     }
-    return result;
+    return std::move(result);
 }
 
 
